@@ -12,12 +12,22 @@
 class Program {
   public static void Main(string[] args) {
     string charString = Prompt("Введите элементы массива, разделяя их пробелом: ");
+    var stringArr = ConvertStringToStringArray(charString);
     Console.WriteLine("Начальный массив: [" + String.Join(", ", charString) + "]");
+    Console.WriteLine("Результат отбора: [" + String.Join(", ", SelectionString(stringArr)) + "]");
   }
   
   static string Prompt(string message) {
     Console.Write(message);
     string readInput = Console.ReadLine() ?? "Null";
     return readInput;
+  }
+
+  static string[] ConvertStringToStringArray(string text) {
+    return text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+  }
+
+  static string[] SelectionString(string[] arr) {
+    return Array.FindAll(arr, element => element.Length <= 3);
   }
 }
