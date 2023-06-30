@@ -11,9 +11,9 @@
 */
 class Program {
   public static void Main(string[] args) {
-    string charString = Prompt("Введите элементы массива, разделяя их пробелом: ");
+    string charString = Prompt("Введите элементы массива, разделяя их пробелом  и заключая в кавычки: ");
     var stringArr = ConvertStringToStringArray(charString);
-    Console.WriteLine("Начальный массив: [" + String.Join(", ", charString) + "]");
+    Console.WriteLine("Начальный массив: [" + String.Join(", ", stringArr) + "]");
     Console.WriteLine("Результат отбора: [" + String.Join(", ", SelectionString(stringArr)) + "]");
   }
   
@@ -24,10 +24,21 @@ class Program {
   }
 
   static string[] ConvertStringToStringArray(string text) {
-    return text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+    var stringArray = text.Split("\" \"", StringSplitOptions.RemoveEmptyEntries);
+    for (int i = 0; i < stringArray.Length; i++) {
+      stringArray[i] = "\"" + stringArray[i].Replace("\"", "") + "\"";
+    }
+    return stringArray;
   }
-
+  
   static string[] SelectionString(string[] arr) {
-    return Array.FindAll(arr, element => element.Length <= 3);
+    for (int i = 0; i < arr.Length; i++) {
+      arr[i] = arr[i].Replace("\"", "");
+    }
+    var selectArr = Array.FindAll(arr, element => element.Length <= 3);
+    for (int i = 0; i < selectArr.Length; i++) {
+      selectArr[i] = "\"" + selectArr[i] + "\"";
+    }
+    return selectArr;
   }
 }
