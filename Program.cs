@@ -14,7 +14,7 @@ class Program {
     string charString = Prompt("Введите элементы массива, разделяя их пробелом  и заключая в кавычки: ");
     var stringArr = ConvertStringToStringArray(charString);
     Console.WriteLine("Начальный массив: [" + String.Join(", ", stringArr) + "]");
-    Console.WriteLine("Результат отбора: [" + String.Join(", ", SelectionString(stringArr)) + "]");
+    Console.WriteLine("Результат отбора: [" + String.Join(", ", FindShortStringsInArray(stringArr)) + "]");
   }
   
   static string Prompt(string message) {
@@ -31,7 +31,7 @@ class Program {
     return stringArray;
   }
   
-  static string[] SelectionString(string[] arr) {
+  static string[] FindShortStringsInArray(string[] arr) {
     for (int i = 0; i < arr.Length; i++) {
       arr[i] = arr[i].Replace("\"", "");
     }
