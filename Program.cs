@@ -11,34 +11,33 @@
 */
 class Program {
   public static void Main(string[] args) {
-    string charString = Prompt("Введите элементы массива, разделяя их пробелом  и заключая в кавычки: ");
-    var stringArr = ConvertStringToStringArray(charString);
+    var size = PromptToNumber("Задайте желаемый размер массива: ");
+    string[] stringArr = new string[size];
+    FillArray(stringArr);
     Console.WriteLine("Начальный массив: [" + String.Join(", ", stringArr) + "]");
     Console.WriteLine("Результат отбора: [" + String.Join(", ", FindShortStringsInArray(stringArr)) + "]");
   }
   
-  static string Prompt(string message) {
+  static string PromptToString(string message) {
     Console.Write(message);
     string readInput = Console.ReadLine() ?? "Null";
     return readInput;
   }
-
-  static string[] ConvertStringToStringArray(string text) {
-    var stringArray = text.Split("\" \"", StringSplitOptions.RemoveEmptyEntries);
-    for (int i = 0; i < stringArray.Length; i++) {
-      stringArray[i] = "\"" + stringArray[i].Replace("\"", "") + "\"";
-    }
-    return stringArray;
+  static int PromptToNumber(string message) {
+      Console.Write(message);
+      string readInput = Console.ReadLine() ?? "Null";
+      int number;
+      bool isNumber = int.TryParse(readInput, out number);
+      return number;
   }
-  
-  static string[] FindShortStringsInArray(string[] arr) {
+
+  static void FillArray(string[] arr) {
     for (int i = 0; i < arr.Length; i++) {
-      arr[i] = arr[i].Replace("\"", "");
+      arr[i] = PromptToString($"Введите {i+1}-й элемент массива: ");
     }
-    var selectArr = Array.FindAll(arr, element => element.Length <= 3);
-    for (int i = 0; i < selectArr.Length; i++) {
-      selectArr[i] = "\"" + selectArr[i] + "\"";
-    }
-    return selectArr;
+  }
+
+  static string[] FindShortStringsInArray(string[] arr) {
+    return Array.FindAll(arr, element => element.Length <= 3);
   }
 }
